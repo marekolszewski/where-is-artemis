@@ -1,5 +1,5 @@
 import { join } from "path";
-import { mkdirSync, cpSync } from "fs";
+import { mkdirSync, cpSync, existsSync } from "fs";
 
 const ROOT = join(import.meta.dir, "..");
 const DIST = join(ROOT, "dist");
@@ -120,6 +120,8 @@ async function main(): Promise<void> {
   cpSync(join(PUBLIC, "index.html"), join(DIST, "index.html"));
   cpSync(join(PUBLIC, "style.css"), join(DIST, "style.css"));
   cpSync(join(PUBLIC, "textures"), join(DIST, "textures"), { recursive: true });
+  const socialCard = join(PUBLIC, "social-card.png");
+  if (existsSync(socialCard)) cpSync(socialCard, join(DIST, "social-card.png"));
   console.log("\n  Copied static assets");
 
   console.log(`\nBuild complete. Output in dist/`);
