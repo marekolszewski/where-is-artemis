@@ -1,7 +1,7 @@
 node_modules/
-dist/
 bun.lock
 *.log
 .playwright-mcp/
 artemis-screenshot-*.png
+where-is-artemis-prod.png
 /tmp/

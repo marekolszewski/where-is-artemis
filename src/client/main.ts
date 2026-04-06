@@ -74,7 +74,7 @@ function frameCameraToFitScene(
 }
 
 async function fetchTrajectoryData(): Promise<TrajectoryPoint[]> {
-  const response = await fetch("/api/trajectory");
+  const response = await fetch("/data/trajectory.json");
   if (!response.ok) {
     throw new Error(`Failed to fetch trajectory: ${response.status}`);
   }

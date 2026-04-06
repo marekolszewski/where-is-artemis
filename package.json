@@ -5,7 +5,7 @@
   "scripts": {
     "setup": "bun scripts/download-textures.ts",
     "dev": "bun --hot src/server.ts",
-    "build": "bun build src/client/main.ts --outdir dist --target browser --minify --sourcemap=linked",
+    "build": "bun scripts/build.ts",
     "start": "NODE_ENV=production bun src/server.ts"
   },
   "dependencies": {
