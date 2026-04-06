@@ -6,7 +6,9 @@
     "setup": "bun scripts/download-textures.ts",
     "dev": "bun --hot src/server.ts",
     "build": "bun scripts/build.ts",
-    "start": "NODE_ENV=production bun src/server.ts"
+    "start": "NODE_ENV=production bun src/server.ts",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
   },
   "dependencies": {
     "astronomy-engine": "^2.1.19",
@@ -15,6 +17,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/three": "^0.172.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "wrangler": "^4.80.0"
   }
 }
