@@ -75,6 +75,18 @@
     </div>
   </div>
 
+  <div id="video-panel">
+    <button id="video-close" title="Close video">&times;</button>
+    <iframe
+      id="video-iframe"
+      src="https://www.youtube.com/embed/z-j1uxBmis0?autoplay=1&mute=1&rel=0&modestbranding=1"
+      title="Artemis II Live"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+
   <div id="legend">
     <div class="legend-item"><span class="dot" style="background: #00d9ff;"></span> Past trajectory</div>
     <div class="legend-item"><span class="dot" style="background: #263059;"></span> Future trajectory</div>
@@ -85,6 +97,15 @@
     </a>
   </div>
 
+  <script>
+    document.getElementById("video-close").addEventListener("click", function () {
+      var panel = document.getElementById("video-panel");
+      var iframe = document.getElementById("video-iframe");
+      iframe.src = "";
+      panel.classList.add("hidden");
+      document.getElementById("legend").classList.add("video-closed");
+    });
+  </script>
   <script type="module" src="/app.js"></script>
 </body>
 </html>

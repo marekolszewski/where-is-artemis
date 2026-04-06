@@ -185,15 +185,68 @@ body {
   color: #ccc;
 }
 
+#video-panel {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  z-index: 20;
+  width: 340px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #000;
+}
+
+#video-panel.hidden {
+  display: none;
+}
+
+#video-iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+#video-close {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  z-index: 21;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #ccc;
+  font-size: 18px;
+  line-height: 1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+#video-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
 #legend {
   position: fixed;
-  top: 16px;
+  top: 220px;
   right: 20px;
   z-index: 10;
   display: flex;
   flex-direction: column;
   gap: 6px;
   pointer-events: none;
+  transition: top 0.25s ease;
+}
+
+#legend.video-closed {
+  top: 16px;
 }
 
 .legend-item {
