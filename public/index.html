@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artemis II Tracker — 3D Mission Visualization</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <canvas id="scene-canvas"></canvas>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>Loading Artemis II trajectory data from JPL Horizons...</p>
+  </div>
+
+  <div id="header">
+    <h1>ARTEMIS II</h1>
+    <span class="subtitle">Real-Time 3D Mission Tracker</span>
+  </div>
+
+  <div id="controls" style="display: none;">
+    <div id="info-panel">
+      <div class="info-row">
+        <span class="info-label">Date/Time</span>
+        <span id="time-display" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Mission Elapsed</span>
+        <span id="met-display" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Phase</span>
+        <span id="phase-display" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Altitude (Earth)</span>
+        <span id="dist-earth" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Distance (Moon)</span>
+        <span id="dist-moon" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Velocity</span>
+        <span id="velocity" class="info-value">—</span>
+      </div>
+    </div>
+
+    <div id="timeline-bar">
+      <button id="play-btn" title="Play">▶</button>
+      <input type="range" id="scrubber" value="0">
+      <select id="speed-select" title="Playback speed">
+        <option value="100">100x</option>
+        <option value="500" selected>500x</option>
+        <option value="2000">2,000x</option>
+        <option value="5000">5,000x</option>
+        <option value="10000">10,000x</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="legend">
+    <div class="legend-item"><span class="dot" style="background: #00d9ff;"></span> Past trajectory</div>
+    <div class="legend-item"><span class="dot" style="background: #263059;"></span> Future trajectory</div>
+    <div class="legend-item"><span class="dot" style="background: #ffffff;"></span> Spacecraft</div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
