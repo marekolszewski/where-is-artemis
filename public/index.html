@@ -79,7 +79,7 @@
     <button id="video-close" title="Close video">&times;</button>
     <iframe
       id="video-iframe"
-      src="https://www.youtube.com/embed/z-j1uxBmis0?autoplay=1&mute=1&rel=0&modestbranding=1"
+      src="https://www.youtube.com/embed/z-j1uxBmis0?autoplay=1&rel=0&modestbranding=1&enablejsapi=1"
       title="Artemis II Live"
       frameborder="0"
       allow="autoplay; encrypted-media"
@@ -98,6 +98,23 @@
   </div>
 
   <script>
+    // Load YouTube IFrame API for volume control
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+      new YT.Player("video-iframe", {
+        events: {
+          onReady: function (event) {
+            event.target.unMute();
+            event.target.setVolume(80);
+          }
+        }
+      });
+    }
+
     document.getElementById("video-close").addEventListener("click", function () {
       var panel = document.getElementById("video-panel");
       var iframe = document.getElementById("video-iframe");
