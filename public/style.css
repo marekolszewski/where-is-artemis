@@ -292,6 +292,11 @@ body {
   text-shadow: 0 0 10px rgba(0, 170, 255, 0.6), 0 0 4px rgba(0, 0, 0, 0.9);
 }
 
+.label-sun {
+  color: #ffe080;
+  text-shadow: 0 0 10px rgba(255, 200, 50, 0.5), 0 0 4px rgba(0, 0, 0, 0.9);
+}
+
 #github-link {
   display: flex;
   align-items: center;

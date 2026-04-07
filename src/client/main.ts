@@ -131,7 +131,7 @@ async function init(): Promise<void> {
   const spacecraftPos = trajectory.getInterpolatedPosition(fracIdx);
   bodies.spacecraft.position.copy(spacecraftPos);
   trajectory.setCurrentTimeIndex(intIdx);
-  bodies.updateMoonPosition(new Date(timeline.getCurrentTimestamp()));
+  bodies.updatePositions(new Date(timeline.getCurrentTimestamp()));
 
   const initVel = trajectory.getVelocityAtIndex(intIdx);
   if (initVel.speed > 0.01) {
@@ -174,6 +174,10 @@ async function init(): Promise<void> {
     {
       element: createLabel("Orion", "label-spacecraft"),
       getWorldPosition: () => bodies.spacecraft.position.clone(),
+    },
+    {
+      element: createLabel("Sun", "label-sun"),
+      getWorldPosition: () => bodies.sunGroup.position.clone(),
     },
   ];
 
@@ -235,7 +239,7 @@ async function init(): Promise<void> {
     trajectory.setCurrentTimeIndex(currentIntIdx);
 
     const currentDate = new Date(timeline.getCurrentTimestamp());
-    bodies.updateMoonPosition(currentDate);
+    bodies.updatePositions(currentDate);
 
     const earthDist = currentPos.length();
     const moonDist = currentPos.distanceTo(bodies.moonMesh.position);
