@@ -1,6 +1,6 @@
 import { join } from "path";
 
-const PORT = 3000;
+const PORT = parseInt(process.env.PORT || "3000", 10);
 const ROOT = join(import.meta.dir, "..");
 const PUBLIC = join(ROOT, "public");
 
