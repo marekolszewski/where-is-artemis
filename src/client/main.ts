@@ -131,7 +131,7 @@ async function init(): Promise<void> {
   const spacecraftPos = trajectory.getInterpolatedPosition(fracIdx);
   bodies.spacecraft.position.copy(spacecraftPos);
   trajectory.setCurrentTimeIndex(intIdx);
-  bodies.updatePositions(new Date(timeline.getCurrentTimestamp()));
+  bodies.updatePositions(new Date(timeline.getCurrentTimestamp()), ctx.sunLight);
 
   const initVel = trajectory.getVelocityAtIndex(intIdx);
   if (initVel.speed > 0.01) {
@@ -239,7 +239,7 @@ async function init(): Promise<void> {
     trajectory.setCurrentTimeIndex(currentIntIdx);
 
     const currentDate = new Date(timeline.getCurrentTimestamp());
-    bodies.updatePositions(currentDate);
+    bodies.updatePositions(currentDate, ctx.sunLight);
 
     const earthDist = currentPos.length();
     const moonDist = currentPos.distanceTo(bodies.moonMesh.position);

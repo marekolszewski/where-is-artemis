@@ -39,7 +39,6 @@ export function createScene(canvas: HTMLCanvasElement): SceneContext {
   controls.target.set(0, 0, 0);
 
   const sunLight = new THREE.DirectionalLight(0xffffff, 3.0);
-  sunLight.position.set(-500_000, 100_000, 300_000);
   scene.add(sunLight);
 
   const ambient = new THREE.AmbientLight(0x111122, 0.5);
