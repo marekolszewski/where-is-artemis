@@ -80,7 +80,8 @@ export function createBodies(scene: THREE.Scene): CelestialBodies {
     moonMesh.position.set(moonVec.x * AU_TO_KM, moonVec.z * AU_TO_KM, -moonVec.y * AU_TO_KM);
 
     const sunVec = GeoVector(Body.Sun, date, true);
-    sunGroup.position.set(sunVec.x * AU_TO_KM, sunVec.z * AU_TO_KM, -sunVec.y * AU_TO_KM);
+    const sunDir = new THREE.Vector3(sunVec.x, sunVec.z, -sunVec.y).normalize();
+    sunGroup.position.copy(sunDir.multiplyScalar(1_200_000));
   }
 
   function getSpacecraftWorldPos(): THREE.Vector3 {
