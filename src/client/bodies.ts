@@ -7,7 +7,7 @@ export interface CelestialBodies {
   moonMesh: THREE.Mesh;
   sunGroup: THREE.Group;
   spacecraft: THREE.Group;
-  updatePositions: (date: Date) => void;
+  updatePositions: (date: Date, sunLight: THREE.DirectionalLight) => void;
   getSpacecraftWorldPos: () => THREE.Vector3;
 }
 
@@ -75,13 +75,14 @@ export function createBodies(scene: THREE.Scene): CelestialBodies {
   const sunGroup = createSunMarker();
   scene.add(sunGroup);
 
-  function updatePositions(date: Date): void {
+  function updatePositions(date: Date, sunLight: THREE.DirectionalLight): void {
     const moonVec = GeoVector(Body.Moon, date, true);
     moonMesh.position.set(moonVec.x * AU_TO_KM, moonVec.z * AU_TO_KM, -moonVec.y * AU_TO_KM);
 
     const sunVec = GeoVector(Body.Sun, date, true);
     const sunDir = new THREE.Vector3(sunVec.x, sunVec.z, -sunVec.y).normalize();
-    sunGroup.position.copy(sunDir.multiplyScalar(1_200_000));
+    sunGroup.position.copy(sunDir.clone().multiplyScalar(1_200_000));
+    sunLight.position.copy(sunDir.clone().multiplyScalar(500_000));
   }
 
   function getSpacecraftWorldPos(): THREE.Vector3 {
