@@ -72,7 +72,7 @@ function createStarfield(scene: THREE.Scene): void {
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     positions[i * 3 + 2] = r * Math.cos(phi);
 
-    const brightness = 0.08 + Math.random() * 0.22;
+    const brightness = 0.04 + Math.random() * 0.12;
     const tint = Math.random();
     colors[i * 3] = brightness * (tint > 0.8 ? 1.0 : 0.9);
     colors[i * 3 + 1] = brightness * 0.95;
