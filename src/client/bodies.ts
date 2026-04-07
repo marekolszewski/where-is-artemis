@@ -5,8 +5,9 @@ import { EARTH_RADIUS_KM, MOON_RADIUS_KM, AU_TO_KM } from "./types.ts";
 export interface CelestialBodies {
   earthGroup: THREE.Group;
   moonMesh: THREE.Mesh;
+  sunGroup: THREE.Group;
   spacecraft: THREE.Group;
-  updateMoonPosition: (date: Date) => void;
+  updatePositions: (date: Date) => void;
   getSpacecraftWorldPos: () => THREE.Vector3;
 }
 
@@ -71,16 +72,50 @@ export function createBodies(scene: THREE.Scene): CelestialBodies {
   const spacecraft = createSpacecraftMarker();
   scene.add(spacecraft);
 
-  function updateMoonPosition(date: Date): void {
-    const vec = GeoVector(Body.Moon, date, true);
-    moonMesh.position.set(vec.x * AU_TO_KM, vec.z * AU_TO_KM, -vec.y * AU_TO_KM);
+  const sunGroup = createSunMarker();
+  scene.add(sunGroup);
+
+  function updatePositions(date: Date): void {
+    const moonVec = GeoVector(Body.Moon, date, true);
+    moonMesh.position.set(moonVec.x * AU_TO_KM, moonVec.z * AU_TO_KM, -moonVec.y * AU_TO_KM);
+
+    const sunVec = GeoVector(Body.Sun, date, true);
+    sunGroup.position.set(sunVec.x * AU_TO_KM, sunVec.z * AU_TO_KM, -sunVec.y * AU_TO_KM);
   }
 
   function getSpacecraftWorldPos(): THREE.Vector3 {
     return spacecraft.position.clone();
   }
 
-  return { earthGroup, moonMesh, spacecraft, updateMoonPosition, getSpacecraftWorldPos };
+  return { earthGroup, moonMesh, sunGroup, spacecraft, updatePositions, getSpacecraftWorldPos };
+}
+
+function createSunMarker(): THREE.Group {
+  const group = new THREE.Group();
+
+  const coreGeo = new THREE.SphereGeometry(18_000, 32, 32);
+  const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffee });
+  group.add(new THREE.Mesh(coreGeo, coreMat));
+
+  const glowGeo = new THREE.SphereGeometry(40_000, 24, 24);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0xffdd66,
+    transparent: true,
+    opacity: 0.25,
+    depthWrite: false,
+  });
+  group.add(new THREE.Mesh(glowGeo, glowMat));
+
+  const outerGeo = new THREE.SphereGeometry(70_000, 16, 16);
+  const outerMat = new THREE.MeshBasicMaterial({
+    color: 0xffaa22,
+    transparent: true,
+    opacity: 0.08,
+    depthWrite: false,
+  });
+  group.add(new THREE.Mesh(outerGeo, outerMat));
+
+  return group;
 }
 
 function createSpacecraftMarker(): THREE.Group {

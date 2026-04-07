@@ -119,7 +119,7 @@ async function init(): Promise<void> {
   const trajectory = createTrajectory(ctx.scene, trajectoryData);
   const timeline = createTimeline(trajectoryData, controlsContainer);
 
-  bodies.updateMoonPosition(new Date(timeline.getCurrentTimestamp()));
+  bodies.updatePositions(new Date(timeline.getCurrentTimestamp()));
 
   frameCameraToFitScene(ctx, trajectoryData, bodies.moonMesh.position);
 
@@ -139,6 +139,10 @@ async function init(): Promise<void> {
       element: createLabel("Orion", "label-spacecraft"),
       getWorldPosition: () => bodies.spacecraft.position.clone(),
     },
+    {
+      element: createLabel("Sun", "label-sun"),
+      getWorldPosition: () => bodies.sunGroup.position.clone(),
+    },
   ];
 
   const clock = new THREE.Clock();
@@ -157,7 +161,7 @@ async function init(): Promise<void> {
     trajectory.setCurrentTimeIndex(intIdx);
 
     const currentDate = new Date(timeline.getCurrentTimestamp());
-    bodies.updateMoonPosition(currentDate);
+    bodies.updatePositions(currentDate);
 
     const earthDist = spacecraftPos.length();
     const moonPos = bodies.moonMesh.position;
