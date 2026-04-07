@@ -1,0 +1,7 @@
+{
+  "name": "where-is-artemis",
+  "compatibility_date": "2026-04-07",
+  "assets": {
+    "directory": "./dist"
+  }
+}
