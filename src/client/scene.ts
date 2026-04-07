@@ -17,7 +17,7 @@ export function createScene(canvas: HTMLCanvasElement): SceneContext {
     45,
     canvas.clientWidth / canvas.clientHeight,
     50,
-    2_000_000,
+    4_000_000,
   );
   camera.position.set(0, 300_000, 600_000);
 
