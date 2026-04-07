@@ -94,24 +94,24 @@ export function createBodies(scene: THREE.Scene): CelestialBodies {
 function createSunMarker(): THREE.Group {
   const group = new THREE.Group();
 
-  const coreGeo = new THREE.SphereGeometry(18_000, 32, 32);
+  const coreGeo = new THREE.SphereGeometry(6_000, 32, 32);
   const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffee });
   group.add(new THREE.Mesh(coreGeo, coreMat));
 
-  const glowGeo = new THREE.SphereGeometry(40_000, 24, 24);
+  const glowGeo = new THREE.SphereGeometry(12_000, 24, 24);
   const glowMat = new THREE.MeshBasicMaterial({
     color: 0xffdd66,
     transparent: true,
-    opacity: 0.25,
+    opacity: 0.3,
     depthWrite: false,
   });
   group.add(new THREE.Mesh(glowGeo, glowMat));
 
-  const outerGeo = new THREE.SphereGeometry(70_000, 16, 16);
+  const outerGeo = new THREE.SphereGeometry(20_000, 16, 16);
   const outerMat = new THREE.MeshBasicMaterial({
-    color: 0xffaa22,
+    color: 0xffcc44,
     transparent: true,
-    opacity: 0.08,
+    opacity: 0.1,
     depthWrite: false,
   });
   group.add(new THREE.Mesh(outerGeo, outerMat));
