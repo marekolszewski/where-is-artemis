@@ -79,7 +79,7 @@
     <button id="video-close" title="Close video">&times;</button>
     <iframe
       id="video-iframe"
-      src="https://www.youtube.com/embed/z-j1uxBmis0?autoplay=1&rel=0&modestbranding=1&enablejsapi=1"
+      src="https://www.youtube.com/embed/z-j1uxBmis0?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1"
       title="Artemis II Live"
       frameborder="0"
       allow="autoplay; encrypted-media"
@@ -104,12 +104,18 @@
     var firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+    var player;
     function onYouTubeIframeAPIReady() {
-      new YT.Player("video-iframe", {
+      player = new YT.Player("video-iframe", {
         events: {
           onReady: function (event) {
-            event.target.unMute();
             event.target.setVolume(80);
+            // Unmute on first user interaction (browsers block unmuted autoplay)
+            document.addEventListener("click", function unmute() {
+              event.target.unMute();
+              event.target.setVolume(80);
+              document.removeEventListener("click", unmute);
+            });
           }
         }
       });
