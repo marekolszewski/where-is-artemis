@@ -69,7 +69,7 @@ export function createBodies(scene: THREE.Scene): CelestialBodies {
   const moonMesh = new THREE.Mesh(moonGeo, moonMat);
   scene.add(moonMesh);
 
-  const spacecraft = createSpacecraftMarker();
+  const spacecraft = createOrionSpacecraft();
   scene.add(spacecraft);
 
   const sunGroup = createSunMarker();
@@ -119,30 +119,88 @@ function createSunMarker(): THREE.Group {
   return group;
 }
 
-function createSpacecraftMarker(): THREE.Group {
+function createOrionSpacecraft(): THREE.Group {
   const group = new THREE.Group();
 
-  const coreGeo = new THREE.SphereGeometry(400, 16, 16);
-  const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-  group.add(new THREE.Mesh(coreGeo, coreMat));
-
-  const glowGeo = new THREE.SphereGeometry(800, 16, 16);
-  const glowMat = new THREE.MeshBasicMaterial({
-    color: 0x44aaff,
-    transparent: true,
-    opacity: 0.3,
-    depthWrite: false,
+  // Crew Module — conical frustum (narrow top, wide base)
+  const cmGeo = new THREE.CylinderGeometry(150, 450, 550, 32);
+  const cmMat = new THREE.MeshStandardMaterial({
+    color: 0xe0e0e0,
+    metalness: 0.3,
+    roughness: 0.65,
   });
-  group.add(new THREE.Mesh(glowGeo, glowMat));
+  const cm = new THREE.Mesh(cmGeo, cmMat);
+  cm.position.y = 575;
+  group.add(cm);
 
-  const outerGeo = new THREE.SphereGeometry(1500, 12, 12);
-  const outerMat = new THREE.MeshBasicMaterial({
-    color: 0x2266cc,
-    transparent: true,
-    opacity: 0.1,
-    depthWrite: false,
+  // Heat shield — dark disk at CM base
+  const shieldGeo = new THREE.CylinderGeometry(460, 460, 30, 32);
+  const shieldMat = new THREE.MeshStandardMaterial({
+    color: 0x1a1a1a,
+    metalness: 0.05,
+    roughness: 0.95,
   });
-  group.add(new THREE.Mesh(outerGeo, outerMat));
+  const shield = new THREE.Mesh(shieldGeo, shieldMat);
+  shield.position.y = 285;
+  group.add(shield);
+
+  // Adapter ring between CM and SM
+  const adapterGeo = new THREE.CylinderGeometry(440, 400, 50, 32);
+  const adapterMat = new THREE.MeshStandardMaterial({
+    color: 0x555555,
+    metalness: 0.5,
+    roughness: 0.5,
+  });
+  const adapter = new THREE.Mesh(adapterGeo, adapterMat);
+  adapter.position.y = 245;
+  group.add(adapter);
+
+  // Service Module — gold thermal blanket cylinder
+  const smGeo = new THREE.CylinderGeometry(400, 400, 550, 32);
+  const smMat = new THREE.MeshStandardMaterial({
+    color: 0xc9a84c,
+    metalness: 0.55,
+    roughness: 0.35,
+  });
+  const sm = new THREE.Mesh(smGeo, smMat);
+  sm.position.y = -55;
+  group.add(sm);
+
+  // Engine nozzle
+  const nozzleGeo = new THREE.CylinderGeometry(100, 180, 200, 16);
+  const nozzleMat = new THREE.MeshStandardMaterial({
+    color: 0x3a3a3a,
+    metalness: 0.7,
+    roughness: 0.3,
+  });
+  const nozzle = new THREE.Mesh(nozzleGeo, nozzleMat);
+  nozzle.position.y = -430;
+  group.add(nozzle);
+
+  // Solar panel wings — 4 panels in X pattern
+  const panelGeo = new THREE.BoxGeometry(1800, 20, 350);
+  const panelMat = new THREE.MeshStandardMaterial({
+    color: 0x162040,
+    metalness: 0.5,
+    roughness: 0.4,
+    side: THREE.DoubleSide,
+  });
+
+  for (let i = 0; i < 4; i++) {
+    const panel = new THREE.Mesh(panelGeo, panelMat);
+    const angle = (i * Math.PI) / 2 + Math.PI / 4;
+    panel.position.set(
+      Math.cos(angle) * 1100,
+      -55,
+      Math.sin(angle) * 1100,
+    );
+    panel.rotation.y = angle;
+    group.add(panel);
+  }
+
+  // Soft point light for visibility at distance
+  const glow = new THREE.PointLight(0x88bbff, 0.6, 20_000);
+  group.add(glow);
 
   return group;
 }
