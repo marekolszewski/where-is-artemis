@@ -155,12 +155,11 @@ function createOrionSpacecraft(): THREE.Group {
   adapter.position.y = 245;
   group.add(adapter);
 
-  // Service Module — gold thermal blanket cylinder
   const smGeo = new THREE.CylinderGeometry(400, 400, 550, 32);
   const smMat = new THREE.MeshStandardMaterial({
-    color: 0xc9a84c,
-    metalness: 0.55,
-    roughness: 0.35,
+    color: 0x8e949c,
+    metalness: 0.6,
+    roughness: 0.4,
   });
   const sm = new THREE.Mesh(smGeo, smMat);
   sm.position.y = -55;
